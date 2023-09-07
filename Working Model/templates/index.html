@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stock Prediction</title>
+  <style>
+    *
+    {
+      
+    }
+    body {
+      
+      /* background-color: #f2f2f2;
+      margin: 0;
+      padding: 0; */
+    }
+    body{
+      background-image: url("{{ url_for('static', filename='image.jpg') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            /* Additional styling */
+            margin: 0;
+            padding: 0;
+            height: 100vh;;
+            background-size: cover;
+            background-repeat: no-repeat;
+            /* Additional styling */
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+      
+    }
+    .container {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .discription
+    {
+      font-family:"Tahoma";
+      position:absolute;
+      bottom: 0px;
+      padding-bottom: 0%;
+      border-radius: 20px;
+      background-color: #ffffff;
+      border:solid;
+      border-color:rgb(34, 76, 194);
+      color: red;
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+
+    select {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .result {
+      text-align: center;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .timestamp {
+      text-align: center;
+      color: #999;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 style="color: crimson;">STOCK PRICE PREDICTION</h1>
+    <select id="newContent">
+      <option >Select the company</option>
+      <option name="MICROSOFT" value="MSFT">Microsoft</option>
+      <option name="TESLA" value="TSLA">Tesla</option>
+      <option name="APPLE" value="AAPL">Apple</option>
+      <option name="GOOGLE" value="GOOGL">Google</option>
+      <option name="ALIBABA" value="BABA">Alibaba</option>
+      <option name="AMAZON" value="AMZN">Amazon</option>
+  </select><center>
+  <input style="color: rgb(255, 255, 255); background-color: rgb(0, 47, 255);" onclick="updateContent()" type="submit" value="Forecast">
+    <!-- </form> -->
+    <p id="content">After submition please wait for a moment</p></center>
+    <div class="result" id="result"></div>
+    <div class="timestamp" id="timestamp"></div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function updateContent() {
+            var newContent = document.getElementById('newContent').value;
+            $.ajax({
+                url: '/update_content',
+                type: 'POST',
+                data: {new_content: newContent},
+                success: function(response) {
+                    document.getElementById('content').innerHTML = "The predicted price is <strong>"+response+"</strong> Dollars<br><br>"+"**<strong>Disclaimer</strong>**<br> The price Might not be accurate in all the cases.Invest on your own risk";
+                }
+            });
+        }
+        </script>
+  <script>
+    // Get the select element
+    var select = document.getElementById('newContent');
+
+    // Get the result element
+    var result = document.getElementById('result');
+
+    // Get the timestamp element
+    var timestamp = document.getElementById('timestamp');
+
+    // Event listener for the select element
+    select.addEventListener('change', function() {
+      result.innerHTML = 'You selected: ' + select.value;
+      timestamp.innerHTML = 'Timestamp: ' + new Date().toLocaleString();
+    });
+  </script>
+<h3 style="background-color: #ffff;" class="discription"> <marquee><span>Investment on stock market is subject to your own risk please analyze the market consistantly and make investment wisely. The proposed model will help you to forecast the price but it will not be accurate in all instance</span>
+  <span>&nbsp; Investment on stock market is subject to your own risk please analyze the market consistantly and make investment wisely. The proposed model will help you to forecast the price but it will not be accurate in all instance</span>
+  <span>&nbsp; Investment on stock market is subject to your own risk please analyze the market consistantly and make investment wisely. The proposed model will help you to forecast the price but it will not be accurate in all instance</span>
+  <span>&nbsp; Investment on stock market is subject to your own risk please analyze the market consistantly and make investment wisely. The proposed model will help you to forecast the price but it will not be accurate in all instance</span></marquee></h3>
+</body>
+</html>
